@@ -6,7 +6,7 @@ const urlencoded = require('body-parser').urlencoded;
 const cors = require('cors');
 // db connect
 const con = require('./DB/mysql');
-
+require("dotenv").config();
 app.use(cors());
 const json = require('body-parser');
 app.use(json());

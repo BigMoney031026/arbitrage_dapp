@@ -3,9 +3,15 @@ const con = require('../DB/mysql');
 exports.depositUsdt = async (req, res) => {
     const { userAddress, depositAddress, assets, amount } = req.body;
     try {
+        const q = `SELECT * FROM usdtReward WHERE userWalletAddress='${userAddress}'`
+        con.query(q, function (err, result1) {
+            if(result1.length==0){
+                const que = `INSERT INTO usdtReward (userWalletAddress, rewardAmount) VALUES ('${userAddress}','${0}')`;
+                con.query(que, function (err, result) {});
+            }
+        });
         const query = `INSERT INTO depositUsdt (userAddress, depositAddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
         con.query(query, function (err, result) {
-            if (err) throw err
             res.send("success");
         });
     } catch (error) {
@@ -15,6 +21,13 @@ exports.depositUsdt = async (req, res) => {
 exports.depositUsdc = async (req, res) => {
     const { userAddress, depositAddress, assets, amount } = req.body;
     try {
+        const q = `SELECT * FROM usdcReward WHERE userWalletAddress='${userAddress}'`
+        con.query(q, function (err, result1) {
+            if(result1.length==0){
+                const que = `INSERT INTO usdcReward (userWalletAddress, rewardAmount) VALUES ('${userAddress}','${0}')`;
+                con.query(que, function (err, result) {});
+            }
+        });
         const query = `INSERT INTO depositUsdc (userAddress, depositAddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
         con.query(query, function (err, result) {
             if (err) throw err
@@ -39,7 +52,6 @@ exports.withdrawUsdc = (req, res) => {
                              if (err) throw err;
                          })
                     }
-                    console.log(amount)
                     const query = `INSERT INTO withdraw (userAddress, assets, amount) VALUES ('${withdrawAddress}' , '${assets}','${amount}' )`;
                     con.query(query, function (err, result) {
                         if (err) throw err
@@ -68,7 +80,6 @@ exports.withdrawUsdt = (req, res) => {
                              if (err) throw err;
                          })
                     }
-                    console.log(amount)
                     const query = `INSERT INTO withdraw (userAddress, assets, amount) VALUES ('${withdrawAddress}' , '${assets}','${amount}' )`;
                     con.query(query, function (err, result) {
                         if (err) throw err
@@ -96,17 +107,25 @@ exports.getTransactionHistory = (req, res) => {
 };
 exports.getStakingInfoUsdc = (req, res) => {
     try {
+        let totalStake = 0
+        let totalReward = 0
         const q = `SELECT * FROM depositUsdc`;
         con.query(q, function (err, result) {
             if(result.length>0){
-                let totalStake = 0
                 for(var i=0;i<result.length;i++){
                     totalStake = totalStake+result[i].amount
                 }
-                res.send({totalInvestors: result.length, totalStake:totalStake})
-            }else{
-                res.send({totalInvestors: 0, totalStake:0})
             }
+            const query = `SELECT * FROM usdcReward`;
+                con.query(query, function (err, result) {
+                    if(result.length>0)
+                    {
+                        for(var i=0;i<result.length;i++){
+                            totalReward = totalReward+result[i].rewardAmount
+                        }
+                        res.send({totalInvestors: result.length, totalStake:totalStake, totalReward: totalReward})
+                    }
+                })
         });
         } catch (error) {
             console.log(error)
@@ -115,23 +134,147 @@ exports.getStakingInfoUsdc = (req, res) => {
 exports.getStakingInfoUsdt = (req, res) => {
     try {
         const q = `SELECT * FROM depositUsdt`;
+        let totalStake = 0
+        let totalReward = 0
         con.query(q, function (err, result) {
             if(result.length>0){
-                let totalStake = 0
                 for(var i=0;i<result.length;i++){
                     totalStake = totalStake+result[i].amount
                 }
-                res.send({totalInvestors: result.length, totalStake:totalStake})
-            }else{
-                res.send({totalInvestors: 0, totalStake:0})
             }
+            const query = `SELECT * FROM usdtReward`;
+                con.query(query, function (err, result) {
+                    if(result.length>0)
+                    {
+                        for(var i=0;i<result.length;i++){
+                            totalReward = totalReward+result[i].rewardAmount
+                        }
+                        res.send({totalInvestors: result.length, totalStake:totalStake, totalReward: totalReward})
+                    }
+                })
         });
         } catch (error) {
             console.log(error)
         }
 };
+exports.getRewardAmount = (req, res) => {
+    try {
+        const {userAddress} = req.body;
+        const q = `SELECT * FROM depositUsdt WHERE userAddress='${userAddress}' AND status='2'`;
+        const query = `SELECT * FROM depositUsdc WHERE userAddress='${userAddress}' AND status='2'`;
+        let totalRewardUsdt = 0
+        let totalRewardUsdc = 0
+        con.query(q, function (err, result) {
+            if(result.length>0){
+                for(var i=0;i<result.length;i++){
+                    totalRewardUsdt = totalRewardUsdt+result[i].amount
+                }
+            }else{
+                totalRewardUsdt = 0
+            }
+        });
+        con.query(query, function (err, result1) {
+            if(result1.length>0){
+                for(var i=0;i<result1.length;i++){
+                    totalRewardUsdc = totalRewardUsdc+result1[i].amount
+                }
+            }else{
+                totalRewardUsdc = 0
+            }
+            res.send({totalRewardUsdt: totalRewardUsdt/100, totalRewardUsdc:totalRewardUsdc/100})
+        })
+        } catch (error) {
+            console.log(error)
+        }
+};
+exports.getTotalRewardAmount = (req, res) => {
+    try {
+        const {userAddress} = req.body;
+        const q = `SELECT * FROM usdcReward WHERE userWalletAddress='${userAddress}'`;
+        const query = `SELECT * FROM usdtReward WHERE userWalletAddress='${userAddress}'`;
+        let totalRewardUsdt = 0
+        let totalRewardUsdc = 0
+        con.query(q, function (err, result) {
+            if(result.length>0){
+                for(var i=0;i<result.length;i++){
+                    totalRewardUsdc = totalRewardUsdc+result[i].rewardAmount
+                }
+            }else{
+                totalRewardUsdc = 0
+            }
+        });
+        con.query(query, function (err, result1) {
+            if(result1.length>0){
+                for(var i=0;i<result1.length;i++){
+                    totalRewardUsdt = totalRewardUsdt+result1[i].rewardAmount
+                }
+            }else{
+                totalRewardUsdt = 0
+            }
+            res.send({totalRewardUsdt: totalRewardUsdt, totalRewardUsdc:totalRewardUsdc})
+        })
+        } catch (error) {
+            console.log(error)
+        }
+};
 
-
+exports.claimRewardUsdt = async (req, res) => {
+    const { userAddress} = req.body;
+    try {
+        const q1 = `UPDATE usdtReward SET rewardAmount = '${0}' WHERE userWalletAddress='${userAddress}'`;
+            con.query(q1, function (err, result2) {
+            })
+    } catch (error) {
+        console.log(error)
+    }
+};
+exports.claimRewardUsdc = async (req, res) => {
+    const { userAddress} = req.body;
+    try {
+        const q1 = `UPDATE usdcReward SET rewardAmount = '${0}' WHERE userWalletAddress='${userAddress}'`;
+            con.query(q1, function (err, result2) {
+            })
+    } catch (error) {
+        console.log(error)
+    }
+};
+exports.getUsdcRwardRquest = async (req, res) => {
+    const { userAddress,assets,amount} = req.body;
+    try {
+        const q = `SELECT * FROM getRewardUsdc WHERE userAddress='${userAddress}' AND status='1'`;
+        con.query(q,function(error,result1){
+            if(result1.length>0){
+                res.send("pending");
+            }else{
+                const query = `INSERT INTO getRewardUsdc (userAddress, assets, amount) VALUES ('${userAddress}' , '${assets}','${amount}' )`;
+                con.query(query, function (err, result) {
+                    res.send("success");
+                });
+            }
+        })
+       
+    } catch (error) {
+        console.log(error)
+    }
+};
+exports.getUsdtRwardRquest = async (req, res) => {
+    const { userAddress,assets,amount} = req.body;
+    try {
+        const q = `SELECT * FROM getRewardUsdt WHERE userAddress='${userAddress}' AND status='1'`;
+        con.query(q,function(error,result1){
+        if(result1.length>0){
+            res.send("pending");
+        }else{
+            const query = `INSERT INTO getRewardUsdt (userAddress, assets, amount) VALUES ('${userAddress}' , '${assets}','${amount}' )`;
+            con.query(query, function (err, result) {
+                res.send("success");
+            });
+          }
+        })
+    } catch (error) {
+        console.log(error)
+    }
+};
 
 // Admin update Control
 exports.updateUsdt = async (req, res) => {
@@ -156,7 +299,7 @@ exports.updateUsdt = async (req, res) => {
 exports.updateUsdc = async (req, res) => {
     const { id,status } = req.body;
     try {
-        const q = `SELECT * FROM updateUsdc WHERE id='${id}'`;
+        const q = `SELECT * FROM depositUsdc WHERE id='${id}'`;
         con.query(q, function (err, result1) {
             if (result1.length > 0) {
                     const q1 = `UPDATE updateUsdc SET status = '${status}' WHERE id='${id}'`;
@@ -187,33 +330,6 @@ exports.updateWithdraw = async (req, res) => {
                 res.send('noExist');
             }
         })
-    } catch (error) {
-        console.log(error)
-    }
-};
-//Reward control
-exports.getUsdtRewardAmount = async (req, res) => {
-    const { walletAddress} = req.body;
-    try {
-        const query =  `SELECT * FROM depositUsdt WHERE userAddress='${walletAddress}'`;
-        con.query(query, function (err, result) {
-            if (err) throw err
-            const usdtReward = 0
-            res.send(usdtReward);
-        });
-    } catch (error) {
-        console.log(error)
-    }
-};
-exports.getUsdcRewardAmount = async (req, res) => {
-    const { walletAddress} = req.body;
-    try {
-        const query =  `SELECT * FROM depositUsdc WHERE userAddress='${walletAddress}'`;
-        con.query(query, function (err, result) {
-            if (err) throw err
-            const usdcReward = 0
-            res.send(usdcReward);
-        });
     } catch (error) {
         console.log(error)
     }

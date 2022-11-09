@@ -20,7 +20,24 @@ exports.getStakingInfoUsdc = (req, res) => {
 exports.getStakingInfoUsdt = (req, res) => {
     m.getStakingInfoUsdt(req, res);
 }
-
+exports.getRewardAmount = (req, res) => {
+    m.getRewardAmount(req, res);
+}
+exports.getTotalRewardAmount = (req, res) => {
+    m.getTotalRewardAmount(req, res);
+}
+exports.claimRewardUsdt = (req, res) => {
+    m.claimRewardUsdt(req, res);
+}
+exports.claimRewardUsdc = (req, res) => {
+    m.claimRewardUsdc(req, res);
+}
+exports.getUsdcRwardRquest = (req, res) => {
+    m.getUsdcRwardRquest(req, res);
+}
+exports.getUsdtRwardRquest = (req, res) => {
+    m.getUsdtRwardRquest(req, res);
+}
 
 
 

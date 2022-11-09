@@ -96,7 +96,7 @@ exports.withdrawUsdt = (req, res) => {
 exports.getTransactionHistory = (req, res) => {
     const {userAddress} = req.body;
     try {
-        const q = `SELECT * FROM depositusdc WHERE useraddress='${userAddress}' UNION SELECT * FROM depositusdt WHERE useraddress='${userAddress}' UNION SELECT * FROM withdraw WHERE userAddress='${userAddress}' ORDER BY time DESC`;
+        const q = `SELECT * FROM depositusdc WHERE useraddress='${userAddress}' UNION SELECT * FROM depositusdt WHERE useraddress='${userAddress}' UNION SELECT * FROM withdraw WHERE userAddress='${userAddress}' UNION SELECT * FROM getrewardusdc WHERE userAddress='${userAddress}' UNION SELECT * FROM getrewardusdt WHERE userAddress='${userAddress}' ORDER BY time DESC`;
         con.query(q, function (err, result) {
             if (err) throw err
             res.send(result)

@@ -250,7 +250,7 @@ exports.claimRewardUsdc = async (req, res) => {
 exports.getUsdcRwardRquest = async (req, res) => {
     const { userAddress,assets,amount} = req.body;
     try {
-        const q = `SELECT * FROM getRewardusdc WHERE useraddress='${userAddress}' AND status='1'`;
+        const q = `SELECT * FROM getrewardusdc WHERE useraddress='${userAddress}' AND status='1'`;
         con.query(q,function(error,result1){
             if(result1.length>0){
                 res.send("pending");

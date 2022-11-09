@@ -109,11 +109,13 @@ exports.getStakingInfoUsdc = (req, res) => {
     try {
         let totalStake = 0
         let totalReward = 0
+        let totalInvestors = 0
         const q = `SELECT * FROM depositUsdc`;
         con.query(q, function (err, result) {
             if(result.length>0){
                 for(var i=0;i<result.length;i++){
                     totalStake = totalStake+result[i].amount
+                    totalInvestors = result.length
                 }
             }
             const query = `SELECT * FROM usdcReward`;
@@ -123,7 +125,9 @@ exports.getStakingInfoUsdc = (req, res) => {
                         for(var i=0;i<result.length;i++){
                             totalReward = totalReward+result[i].rewardAmount
                         }
-                        res.send({totalInvestors: result.length, totalStake:totalStake, totalReward: totalReward})
+                        res.send({totalInvestors: totalInvestors, totalStake:totalStake, totalReward: totalReward})
+                    }else{
+                        res.send({totalInvestors: totalInvestors, totalStake:totalStake, totalReward: totalReward})
                     }
                 })
         });
@@ -136,10 +140,12 @@ exports.getStakingInfoUsdt = (req, res) => {
         const q = `SELECT * FROM depositUsdt`;
         let totalStake = 0
         let totalReward = 0
+        let totalInvestors = 0
         con.query(q, function (err, result) {
             if(result.length>0){
                 for(var i=0;i<result.length;i++){
                     totalStake = totalStake+result[i].amount
+                    totalInvestors = result.length
                 }
             }
             const query = `SELECT * FROM usdtReward`;
@@ -149,7 +155,9 @@ exports.getStakingInfoUsdt = (req, res) => {
                         for(var i=0;i<result.length;i++){
                             totalReward = totalReward+result[i].rewardAmount
                         }
-                        res.send({totalInvestors: result.length, totalStake:totalStake, totalReward: totalReward})
+                        res.send({totalInvestors:totalInvestors, totalStake:totalStake, totalReward: totalReward})
+                    }else{
+                        res.send({totalInvestors:totalInvestors, totalStake:totalStake, totalReward: totalReward})
                     }
                 })
         });

@@ -67,5 +67,5 @@ setInterval(function(){
             console.log(error)
         }
 },60*60*24*1000)
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 80;
 app.listen(PORT, console.log("Server has started at port " + PORT))

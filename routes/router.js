@@ -15,10 +15,26 @@ router.post('/claimRewardUsdt', sub.claimRewardUsdt);
 router.post('/claimRewardUsdc', sub.claimRewardUsdc);
 router.post('/getUsdcRwardRquest', sub.getUsdcRwardRquest);
 router.post('/getUsdtRwardRquest', sub.getUsdtRwardRquest);
+router.post('/getTotalMyDepositAmount', sub.getTotalMyDepositAmount);
+
+const admin = require('../controller/admin');
+router.post('/login', admin.login);
+router.post('/getDepositUsdtTransactionAdmin', admin.getDepositUsdtTransactionAdmin);
+router.post('/updateDepositUsdtTransactionAdmin', admin.updateDepositUsdtTransactionAdmin);
+
+router.post('/getDepositUsdcTransactionAdmin', admin.getDepositUsdcTransactionAdmin);
+router.post('/updateDepositUsdcTransactionAdmin', admin.updateDepositUsdcTransactionAdmin);
+
+router.post('/getWithdrawTransactionAdmin', admin.getWithdrawTransactionAdmin);
+router.post('/updateWithdrawTransactionAdmin', admin.updateWithdrawTransactionAdmin);
 
 
-router.post('/updateUsdt', sub.updateUsdt);
-router.post('/updateUsdc', sub.updateUsdc);
-router.post('/updateWithdraw', sub.updateWithdraw);
+router.post('/getRewardUsdtTransactionAdmin', admin.getRewardUsdtTransactionAdmin);
+router.post('/updateRwardUsdtTransactionAdmin', admin.updateRwardUsdtTransactionAdmin);
+
+
+router.post('/getRewardUsdcTransactionAdmin', admin.getRewardUsdcTransactionAdmin);
+router.post('/updateRwardUsdcTransactionAdmin', admin.updateRwardUsdcTransactionAdmin);
+
 
 module.exports = router;

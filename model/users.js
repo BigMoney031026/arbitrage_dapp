@@ -1,6 +1,6 @@
 const con = require('../DB/mysql');
 // Deposit and withdraw control
-exports.depositusdt = async (req, res) => {
+exports.depositUsdt = async (req, res) => {
     const { userAddress, depositAddress, assets, amount } = req.body;
     try {
         const q = `SELECT * FROM usdtreward WHERE userwalletaddress='${userAddress}'`
@@ -190,6 +190,36 @@ exports.getRewardAmount = (req, res) => {
                 totalRewardUsdc = 0
             }
             res.send({totalRewardUsdt: totalRewardUsdt/100, totalRewardUsdc:totalRewardUsdc/100})
+        })
+        } catch (error) {
+            console.log(error)
+        }
+};
+exports.getTotalMyDepositAmount = (req, res) => {
+    try {
+        const {userAddress} = req.body;
+        const q = `SELECT * FROM depositusdt WHERE useraddress='${userAddress}'`;
+        const query = `SELECT * FROM depositusdc WHERE useraddress='${userAddress}'`;
+        let totalUsdt = 0
+        let totalUsdc = 0
+        con.query(q, function (err, result) {
+            if(result.length>0){
+                for(var i=0;i<result.length;i++){
+                    totalUsdt = totalUsdt+result[i].amount
+                }
+            }else{
+                totalUsdt = 0
+            }
+        });
+        con.query(query, function (err, result1) {
+            if(result1.length>0){
+                for(var i=0;i<result1.length;i++){
+                    totalUsdc = totalUsdc+result1[i].amount
+                }
+            }else{
+                totalUsdc = 0
+            }
+            res.send({total: totalUsdt+totalUsdc})
         })
         } catch (error) {
             console.log(error)

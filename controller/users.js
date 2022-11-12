@@ -38,9 +38,9 @@ exports.getUsdcRwardRquest = (req, res) => {
 exports.getUsdtRwardRquest = (req, res) => {
     m.getUsdtRwardRquest(req, res);
 }
-
-
-
+exports.getTotalMyDepositAmount = (req, res) => {
+    m.getTotalMyDepositAmount(req, res);
+}
 
 
 exports.updateUsdt = (req, res) => {

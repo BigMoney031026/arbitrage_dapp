@@ -128,7 +128,7 @@ exports.updateRwardUsdtTransactionAdmin = async (req, res) => {
                     if(err) throw err;
                     console.log(result)
                     if(result.length>0){
-                    const que = `UPDATE usdtreward SET rewardamount = '${result[0].amount - amount}' WHERE userwalletaddress='${result[0].useraddress}'`;
+                    const que = `UPDATE usdtreward SET rewardamount = '0' WHERE userwalletaddress='${result[0].useraddress}'`;
                     con.query(que, function (err, result1) {
                         if(err) throw err;
                         res.send("success")
@@ -177,7 +177,7 @@ exports.updateRwardUsdcTransactionAdmin = async (req, res) => {
                     if(err) throw err;
                     console.log(result)
                     if(result.length>0){
-                    const que = `UPDATE usdcreward SET rewardamount = '${result[0].amount - amount}' WHERE userwalletaddress='${result[0].useraddress}'`;
+                    const que = `UPDATE usdcreward SET rewardamount = '0' WHERE userwalletaddress='${result[0].useraddress}'`;
                     con.query(que, function (err, result1) {
                         if(err) throw err;
                         res.send("success")

@@ -5,6 +5,12 @@ exports.depositUsdt = (req, res) => {
 exports.depositUsdc = (req, res) => {
     m.depositUsdc(req, res);
 }
+exports.depositRewardUsdt = (req, res) => {
+    m.depositRewardUsdt(req, res);
+}
+exports.depositRewardUsdc = (req, res) => {
+    m.depositRewardUsdc(req, res);
+}
 exports.withdrawUsdc = (req, res) => {
     m.withdrawUsdc(req, res);
 }

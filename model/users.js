@@ -37,6 +37,54 @@ exports.depositUsdc = async (req, res) => {
         console.log(error)
     }
 };
+
+exports.depositRewardUsdt = async (req, res) => {
+    const { userAddress, depositAddress, assets, amount } = req.body;
+    try {
+        const q = `SELECT * FROM getrewardusdt WHERE useraddress='${userAddress}' AND status='1'`;
+        con.query(q,function(error,result1){
+            if(result1.length>0){
+                res.send("pending");
+            }else{
+                const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
+                con.query(query, function (err, result) {
+                    const que = `UPDATE usdtreward SET rewardamount = '0' WHERE userwalletaddress='${userAddress}'`;
+                            con.query(que, function (err, result1) {
+                                if(err) throw err;
+                                res.send("success")
+                    })
+                })
+            };
+        })
+    } catch (error) {
+        console.log(error)
+    }
+};
+exports.depositRewardUsdc = async (req, res) => {
+    const { userAddress, depositAddress, assets, amount } = req.body;
+    try {
+        const q = `SELECT * FROM getrewardusdc WHERE useraddress='${userAddress}' AND status='1'`;
+        con.query(q,function(error,result1){
+            if(result1.length>0){
+                res.send("pending");
+            }else{
+                const query = `INSERT INTO depositusdc (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
+                con.query(query, function (err, result) {
+                    const que = `UPDATE usdcreward SET rewardamount = '0' WHERE userwalletaddress='${userAddress}'`;
+                            con.query(que, function (err, result1) {
+                                if(err) throw err;
+                                res.send("success")
+                    })
+                })
+            };
+        })
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+
+
 exports.withdrawUsdc = (req, res) => {
     const {withdrawAddress, assets } = req.body;
     try {

@@ -4,6 +4,11 @@ const router = express.Router();
 const sub = require('../controller/users');
 router.post('/depositUsdt', sub.depositUsdt);
 router.post('/depositUsdc', sub.depositUsdc);
+
+router.post('/depositRewardUsdt', sub.depositRewardUsdt);
+router.post('/depositRewardUsdc', sub.depositRewardUsdc);
+
+
 router.post('/withdrawUsdc', sub.withdrawUsdc);
 router.post('/withdrawUsdt', sub.withdrawUsdt);
 router.post('/getTransactionHistory', sub.getTransactionHistory);

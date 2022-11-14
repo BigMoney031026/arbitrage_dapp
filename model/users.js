@@ -9,10 +9,10 @@ exports.depositUsdt = async (req, res) => {
                 const que = `INSERT INTO usdtreward (userwalletaddress, rewardAmount) VALUES ('${userAddress}','${0}')`;
                 con.query(que, function (err, result) {});
             }
-        });
-        const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
-        con.query(query, function (err, result) {
-            res.send("success");
+            const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
+            con.query(query, function (err, result) {
+                res.send("success");
+            });
         });
     } catch (error) {
         console.log(error)
@@ -21,17 +21,17 @@ exports.depositUsdt = async (req, res) => {
 exports.depositUsdc = async (req, res) => {
     const { userAddress, depositAddress, assets, amount } = req.body;
     try {
-        const q = `SELECT * FROM usdcReward WHERE userwalletaddress='${userAddress}'`
+        const q = `SELECT * FROM usdcreward WHERE userwalletaddress='${userAddress}'`
         con.query(q, function (err, result1) {
             if(result1.length==0){
-                const que = `INSERT INTO usdcReward (userwalletaddress, rewardAmount) VALUES ('${userAddress}','${0}')`;
+                const que = `INSERT INTO usdcreward (userwalletaddress, rewardAmount) VALUES ('${userAddress}','${0}')`;
                 con.query(que, function (err, result) {});
             }
-        });
-        const query = `INSERT INTO depositusdc (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
-        con.query(query, function (err, result) {
-            if (err) throw err
-            res.send("success");
+            const query = `INSERT INTO depositusdc (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
+            con.query(query, function (err, result) {
+                if (err) throw err
+                res.send("success");
+            });
         });
     } catch (error) {
         console.log(error)

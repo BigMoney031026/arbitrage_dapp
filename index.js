@@ -34,7 +34,8 @@ app.get('*', (req, res, next) => {
     }
     next()
 })
-let httpsServer = null
+const server = http.createServer(app)
+    let httpsServer = null
 
     const file_key = __dirname+'/certs/arbitrage.key';
     const file_crt = __dirname+'/certs/arbitrage.crt';
@@ -97,7 +98,8 @@ setInterval(function(){
         }
 },60*60*24*1000)
 const PORT = process.env.PORT || 443;
-// app.listen(PORT, console.log("Server has started at port " + PORT))
+app.listen(PORT, console.log("Server has started at port " + PORT))
+// new Promise(resolve=>server.listen({ PORT, host:'0.0.0.0' }, ()=>resolve(true)))
 if (httpsServer) {
     new Promise(resolve=>httpsServer.listen({ port:PORT, host:'0.0.0.0' }, ()=>resolve(true)))
     console.log(`Started HTTPS service on port ${PORT}`)

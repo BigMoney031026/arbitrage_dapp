@@ -4,6 +4,9 @@ const path = require('path')
 const bodyParser = require("body-parser");
 const urlencoded = require('body-parser').urlencoded;
 const cors = require('cors');
+const http = require('http')
+const https = require('https')
+const fs = require('fs')
 // db connect
 const con = require('./DB/mysql');
 require("dotenv").config();
@@ -23,7 +26,28 @@ app.use(express.static(path.normalize(__dirname + '/build')))
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 })
+app.get('*', (req, res, next) => {
+    if (req.protocol==='http') {
+      return res.redirect('https://' + req.hostname + req.url)
+    }
+    next()
+})
+let httpsServer = null
 
+    const file_key = __dirname+'/certs/arbitrage.key';
+    const file_crt = __dirname+'/certs/arbitrage.crt';
+    if (fs.existsSync(file_key) && fs.existsSync(file_crt) ) { // && fs.existsSync(file_ca)
+        const key = fs.readFileSync(file_key, 'utf8')
+        const cert = fs.readFileSync(file_crt, 'utf8')
+        /* const caBundle = fs.readFileSync(file_ca, 'utf8')
+        const ca = caBundle.split('-----END CERTIFICATE-----\n') .map((cert) => cert +'-----END CERTIFICATE-----\n')
+        ca.pop() */
+        const options = {cert,key} // ,ca
+        httpsServer = https.createServer(options,app)
+        // initSocket(httpsServer)
+    } else {
+        console.log("Do not find ssl files, disabled ssl features.")
+    }
 setInterval(function(){
     try {
         const query = `SELECT * FROM usdcreward`;
@@ -70,5 +94,9 @@ setInterval(function(){
             console.log(error)
         }
 },60*60*24*1000)
-const PORT = process.env.PORT || 80;
-app.listen(PORT, console.log("Server has started at port " + PORT))
+const PORT = process.env.PORT || 443;
+// app.listen(PORT, console.log("Server has started at port " + PORT))
+if (httpsServer) {
+    new Promise(resolve=>httpsServer.listen({ port:PORT, host:'0.0.0.0' }, ()=>resolve(true)))
+    console.log(`Started HTTPS service on port ${PORT}`)
+}

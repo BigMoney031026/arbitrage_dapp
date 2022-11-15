@@ -12,6 +12,14 @@ const con = require('./DB/mysql');
 require("dotenv").config();
 app.use(cors());
 const json = require('body-parser');
+app.use('*', (req, res, next) => {
+    console.log(req.protocol)
+    if (req.protocol==='http') {
+        console.log(req.protocol)
+      return res.redirect('https://' + req.hostname + req.url)
+    }
+    next()
+})
 app.use(json());
 app.use(express.json());
 
@@ -23,14 +31,14 @@ app.set('view engine', 'html');
 //Routes
 app.use('/', require('./routes/router'));
 app.use(express.static(path.normalize(__dirname + '/build')))
-app.get('*', (req, res, next) => {
-    console.log(req.protocol)
-    if (req.protocol==='http') {
-        console.log(req.protocol)
-      return res.redirect('https://' + req.hostname + req.url)
-    }
-    next()
-})
+// app.get('*', (req, res, next) => {
+//     console.log(req.protocol)
+//     if (req.protocol==='http') {
+//         console.log(req.protocol)
+//       return res.redirect('https://' + req.hostname + req.url)
+//     }
+//     next()
+// })
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 })

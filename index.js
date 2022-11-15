@@ -27,7 +27,9 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 })
 app.get('*', (req, res, next) => {
+    console.log(req.protocol)
     if (req.protocol==='http') {
+        console.log(req.protocol)
       return res.redirect('https://' + req.hostname + req.url)
     }
     next()

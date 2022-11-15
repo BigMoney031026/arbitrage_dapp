@@ -23,9 +23,6 @@ app.set('view engine', 'html');
 //Routes
 app.use('/', require('./routes/router'));
 app.use(express.static(path.normalize(__dirname + '/build')))
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
-})
 app.get('*', (req, res, next) => {
     console.log(req.protocol)
     if (req.protocol==='http') {
@@ -33,6 +30,9 @@ app.get('*', (req, res, next) => {
       return res.redirect('https://' + req.hostname + req.url)
     }
     next()
+})
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
 })
     let httpsServer = null
     const file_key = __dirname+'/certs/arbitrage.key';

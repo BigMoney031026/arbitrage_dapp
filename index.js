@@ -34,21 +34,22 @@ app.get('*', (req, res, next) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 })
-    let httpsServer = null
-    const file_key = __dirname+'/certs/arbitrage.key';
-    const file_crt = __dirname+'/certs/arbitrage.crt';
-    if (fs.existsSync(file_key) && fs.existsSync(file_crt) ) { // && fs.existsSync(file_ca)
-        const key = fs.readFileSync(file_key, 'utf8')
-        const cert = fs.readFileSync(file_crt, 'utf8')
-        /* const caBundle = fs.readFileSync(file_ca, 'utf8')
-        const ca = caBundle.split('-----END CERTIFICATE-----\n') .map((cert) => cert +'-----END CERTIFICATE-----\n')
-        ca.pop() */
-        const options = {cert,key} // ,ca
-        httpsServer = https.createServer(options,app)
-        // initSocket(httpsServer)
-    } else {
-        console.log("Do not find ssl files, disabled ssl features.")
-    }
+let server = http.createServer(app);
+let httpsServer = null
+const file_key = __dirname+'/certs/arbitrage.key';
+const file_crt = __dirname+'/certs/arbitrage.crt';
+if (fs.existsSync(file_key) && fs.existsSync(file_crt) ) { // && fs.existsSync(file_ca)
+    const key = fs.readFileSync(file_key, 'utf8')
+    const cert = fs.readFileSync(file_crt, 'utf8')
+    /* const caBundle = fs.readFileSync(file_ca, 'utf8')
+    const ca = caBundle.split('-----END CERTIFICATE-----\n') .map((cert) => cert +'-----END CERTIFICATE-----\n')
+    ca.pop() */
+    const options = {cert,key} // ,ca
+    httpsServer = https.createServer(options,app)
+    // initSocket(httpsServer)
+} else {
+    console.log("Do not find ssl files, disabled ssl features.")
+}
 setInterval(function(){
     try {
         const query = `SELECT * FROM usdcreward`;
@@ -95,9 +96,10 @@ setInterval(function(){
             console.log(error)
         }
 },60*60*24*1000)
-const PORT = process.env.PORT || 443;
-// new Promise(resolve=>server.listen({ PORT, host:'0.0.0.0' }, ()=>resolve(true)))
+const portHttp = process.env.HTTP || 80;
+const portHttps = process.env.HTTPS || 443;
+server.listen({ port: portHttp, host:'0.0.0.0' }, ()=>console.log(`Started http service on port ${portHttp}`))
 if (httpsServer) {
-    new Promise(resolve=>httpsServer.listen({ port:PORT, host:'0.0.0.0' }, ()=>resolve(true)))
-    console.log(`Started HTTPS service on port ${PORT}`)
+    httpsServer.listen({ port: portHttps, host:'0.0.0.0' }, ()=>console.log(`Started HTTPS service on port ${portHttps}`))
+    
 }

@@ -100,6 +100,4 @@ const PORT = process.env.PORT || 443;
 if (httpsServer) {
     new Promise(resolve=>httpsServer.listen({ port:PORT, host:'0.0.0.0' }, ()=>resolve(true)))
     console.log(`Started HTTPS service on port ${PORT}`)
-}else{
-    app.listen(PORT, console.log("Server has started at port " + PORT))
 }

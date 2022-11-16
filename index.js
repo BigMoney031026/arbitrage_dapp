@@ -15,7 +15,6 @@ const json = require('body-parser');
 app.use('*', (req, res, next) => {
     console.log(req.protocol)
     if (req.protocol==='http') {
-        console.log(req.protocol)
       return res.redirect('https://' + req.hostname + req.url)
     }
     next()

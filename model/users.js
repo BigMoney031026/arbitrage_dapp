@@ -267,7 +267,7 @@ exports.getTotalMyDepositAmount = (req, res) => {
             }else{
                 totalUsdc = 0
             }
-            res.send({total: totalUsdt+totalUsdc})
+            res.send({totalUsdt: totalUsdt, totalUsdc:totalUsdc})
         })
         } catch (error) {
             console.log(error)

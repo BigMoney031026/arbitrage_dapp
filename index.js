@@ -64,17 +64,18 @@ setInterval(function(){
             con.query(query, function (err, result1) {
                 if (err) throw err;
                 if (result1.length > 0) {
-                    console.log(result1,'usdc result')
                     for(var i=0;i<result1.length;i++){
                         let amount = result1[i].rewardamount
                         let address = result1[i].userwalletaddress
+                        console.log(amount,address,'USDC')
                         const q = `SELECT * FROM depositusdc WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
                         con.query(q, function (err, result2) {
                             for(var j=0;j<result2.length;j++){
                                 amount = amount + result2[j].amount/100
                             }
+                                 console.log(amount,'after USDC')
                             const q1 = `UPDATE usdcreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
-                            con.query(q1, function (err, result2) {
+                            con.query(q1, function (err, result3) {
                                 if (err) throw err;
                             })
                         })
@@ -84,19 +85,19 @@ setInterval(function(){
         const queryUsdt = `SELECT * FROM usdtreward`;
         con.query(queryUsdt, function (err, result1) {
             if (result1.length > 0) {
-                console.log(result1,'usdt result')
                 for(var i=0;i<result1.length;i++){
                     let address = result1[i].userwalletaddress
                     let amount = result1[i].rewardamount
+                    console.log(amount,address,'USDT')
                     const q = `SELECT * FROM depositusdt WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
                     con.query(q, function (err, result2) {
                         console.log(result2)
                         for(var j=0;j<result2.length;j++){
                             amount = amount + result2[j].amount/100
                         }
-                        console.log(amount)
+                        console.log(amount,'after USDT')
                         const q1 = `UPDATE usdtreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
-                        con.query(q1, function (err, result2) {
+                        con.query(q1, function (err, result3) {
                         })
                     })
                 }

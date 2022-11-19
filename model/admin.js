@@ -119,7 +119,7 @@ exports.getRewardUsdtTransactionAdmin = async (req, res) => {
 exports.updateRwardUsdtTransactionAdmin = async (req, res) => {
     const { id,type,amount } = req.body;
     try {
-        if(type == 2){
+        if(type == 2||type == 4){
             const query = `UPDATE getrewardusdt SET status = '${type}' WHERE id='${id}'`;
             con.query(query, function (err, result2) {
                 if (err) throw err;
@@ -168,7 +168,7 @@ exports.getRewardUsdcTransactionAdmin = async (req, res) => {
 exports.updateRwardUsdcTransactionAdmin = async (req, res) => {
     const { id,type,amount } = req.body;
     try {
-        if(type == 2){
+        if(type == 2||type == 4){
             const query = `UPDATE getrewardusdc SET status = '${type}' WHERE id='${id}'`;
             con.query(query, function (err, result2) {
                 if (err) throw err;

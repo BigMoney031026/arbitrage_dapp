@@ -76,6 +76,7 @@ setInterval(function(){
                                  console.log(amount,'after USDC')
                             const q1 = `UPDATE usdcreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
                             con.query(q1, function (err, result3) {
+                                console.log(result3)
                                 if (err) throw err;
                             })
                         })
@@ -91,7 +92,6 @@ setInterval(function(){
                     console.log(amount,address,'USDT')
                     const q = `SELECT * FROM depositusdt WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
                     con.query(q, function (err, result2) {
-                        console.log(result2)
                         for(var j=0;j<result2.length;j++){
                             amount = amount + result2[j].amount/100
                         }

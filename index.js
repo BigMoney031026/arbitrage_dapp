@@ -71,7 +71,7 @@ setInterval(function(){
                         const q = `SELECT * FROM depositusdc WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
                         con.query(q, function (err, result2) {
                             for(var j=0;j<result2.length;j++){
-                                amount = amount + result2[j].amount
+                                amount = amount + result2[j].amount/100
                             }
                             const q1 = `UPDATE usdcreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
                             con.query(q1, function (err, result2) {
@@ -92,7 +92,7 @@ setInterval(function(){
                     con.query(q, function (err, result2) {
                         console.log(result2)
                         for(var j=0;j<result2.length;j++){
-                            amount = amount + result2[j].amount
+                            amount = amount + result2[j].amount/100
                         }
                         console.log(amount)
                         const q1 = `UPDATE usdtreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;

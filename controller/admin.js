@@ -35,5 +35,5 @@ exports.getRewardUsdcTransactionAdmin = (req, res) => {
     m.getRewardUsdcTransactionAdmin(req, res);
 }
 exports.updateRwardUsdcTransactionAdmin = (req, res) => {
-    m.updateRwardUsdcransactionAdmin(req, res);
+    m.updateRwardUsdcTransactionAdmin(req, res);
 }

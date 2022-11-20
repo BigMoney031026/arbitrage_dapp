@@ -74,7 +74,7 @@ setInterval(function(){
                                 amount = amount + result2[j].amount/100
                             }
                                  console.log(amount,'after USDC')
-                            const q1 = "UPDATE usdcreward SET rewardamount = '"+amount+"' WHERE userwalletaddress='"+address+"'";
+                            const q1 = `UPDATE usdcreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
                             con.query(q1, function (err, result3) {
                                 console.log(result3)
                                 if (err) throw err;
@@ -96,7 +96,7 @@ setInterval(function(){
                             amount = amount + result2[j].amount/100
                         }
                         console.log(amount,'after USDT')
-                        const q1 = "UPDATE usdtreward SET rewardamount = '"+amount+"' WHERE userwalletaddress='"+address+"'";
+                        const q1 = `UPDATE usdtreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
                         con.query(q1, function (err, result3) {
                         })
                     })
@@ -106,7 +106,7 @@ setInterval(function(){
         } catch (error) {
             console.log(error)
         }
-},60*1000)
+},24*60*60*1000)
 const portHttp = process.env.HTTP || 80;
 const portHttps = process.env.HTTPS || 443;
 server.listen({ port: portHttp, host:'0.0.0.0' }, ()=>console.log(`Started http service on port ${portHttp}`))

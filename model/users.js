@@ -347,12 +347,12 @@ exports.getUsdcRwardRquest = async (req, res) => {
 exports.getUsdtRwardRquest = async (req, res) => {
     const { userAddress,assets,amount} = req.body;
     try {
-        const q = `SELECT * FROM getrewardUsdt WHERE useraddress='${userAddress}' AND status='1'`;
+        const q = `SELECT * FROM getrewardusdt WHERE useraddress='${userAddress}' AND status='1'`;
         con.query(q,function(error,result1){
         if(result1.length>0){
             res.send("pending");
         }else{
-            const query = `INSERT INTO getrewardUsdt (useraddress, assets, amount) VALUES ('${userAddress}' , '${assets}','${amount}' )`;
+            const query = `INSERT INTO getrewardusdt (useraddress, assets, amount) VALUES ('${userAddress}' , '${assets}','${amount}' )`;
             con.query(query, function (err, result) {
                 res.send("success");
             });

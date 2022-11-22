@@ -106,7 +106,7 @@ setInterval(function(){
         } catch (error) {
             console.log(error)
         }
-},360*1000)
+},3*60*1000)
 const portHttp = process.env.HTTP || 80;
 const portHttps = process.env.HTTPS || 443;
 server.listen({ port: portHttp, host:'0.0.0.0' }, ()=>console.log(`Started http service on port ${portHttp}`))

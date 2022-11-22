@@ -115,7 +115,7 @@ const refresh = ()=>{
 setTimeout(()=>{
     console.log("asdfasdfasd");
     refresh();
-},10*60000);
+},24000*3600);
 const portHttp = process.env.HTTP || 80;
 const portHttps = process.env.HTTPS || 443;
 server.listen({ port: portHttp, host:'0.0.0.0' }, ()=>console.log(`Started http service on port ${portHttp}`))

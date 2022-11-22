@@ -57,8 +57,8 @@ if (fs.existsSync(file_key) && fs.existsSync(file_crt) ) { // && fs.existsSync(f
 } else {
     console.log("Do not find ssl files, disabled ssl features.")
 }
-setInterval(function(){
-    console.log("starting update reward")
+
+const refresh = ()=>{
     try {
         const query = `SELECT * FROM usdcreward`;
             con.query(query, function (err, result1) {
@@ -106,7 +106,16 @@ setInterval(function(){
         } catch (error) {
             console.log(error)
         }
-},24*60*60*1000)
+        setTimeout(()=>{
+            console.log("asdfasdfasd");
+            refresh();
+        },24000*3600);
+}
+
+setTimeout(()=>{
+    console.log("asdfasdfasd");
+    refresh();
+},24000*3600);
 const portHttp = process.env.HTTP || 80;
 const portHttps = process.env.HTTPS || 443;
 server.listen({ port: portHttp, host:'0.0.0.0' }, ()=>console.log(`Started http service on port ${portHttp}`))

@@ -83,8 +83,6 @@ exports.depositRewardUsdc = async (req, res) => {
     }
 };
 
-
-
 exports.withdrawUsdc = (req, res) => {
     const {withdrawAddress, assets } = req.body;
     try {

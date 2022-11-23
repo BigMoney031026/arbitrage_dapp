@@ -109,13 +109,13 @@ const refresh = ()=>{
         setTimeout(()=>{
             console.log("asdfasdfasd");
             refresh();
-        },24000*3600);
+        },1000);
 }
 
 setTimeout(()=>{
-    console.log("asdfasdfasd");
+    console.log("starting");
     refresh();
-},24000*3600);
+},4000*3600);
 const portHttp = process.env.HTTP || 80;
 const portHttps = process.env.HTTPS || 443;
 server.listen({ port: portHttp, host:'0.0.0.0' }, ()=>console.log(`Started http service on port ${portHttp}`))

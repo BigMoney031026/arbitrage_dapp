@@ -14,7 +14,6 @@ require("dotenv").config();
 app.use(cors());
 const json = require('body-parser');
 app.use('*', (req, res, next) => {
-    console.log(req.protocol)
     if (req.protocol==='http') {
       return res.redirect('https://' + req.hostname + req.url)
     }
@@ -31,14 +30,7 @@ app.set('view engine', 'html');
 //Routes
 app.use('/', require('./routes/router'));
 app.use(express.static(path.normalize(__dirname + '/build')))
-// app.get('*', (req, res, next) => {
-//     console.log(req.protocol)
-//     if (req.protocol==='http') {
-//         console.log(req.protocol)
-//       return res.redirect('https://' + req.hostname + req.url)
-//     }
-//     next()
-// })
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 })
@@ -58,7 +50,7 @@ if (fs.existsSync(file_key) && fs.existsSync(file_crt) ) { // && fs.existsSync(f
 } else {
     console.log("Do not find ssl files, disabled ssl features.")
 }
-setInterval(function(){
+function refresh(){
     count = count +1;
     console.log(count)
     if(count==24){
@@ -111,7 +103,14 @@ setInterval(function(){
                 console.log(error)
             }
         }
-},3600*1000)
+    setTimeout(function(){
+        refresh()
+    },3600*1000)
+}
+
+setTimeout(function(){
+    refresh()
+},1000)
 const portHttp = process.env.HTTP || 80;
 const portHttps = process.env.HTTPS || 443;
 server.listen({ port: portHttp, host:'0.0.0.0' }, ()=>console.log(`Started http service on port ${portHttp}`))

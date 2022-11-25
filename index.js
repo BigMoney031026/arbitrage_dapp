@@ -51,10 +51,7 @@ if (fs.existsSync(file_key) && fs.existsSync(file_crt) ) { // && fs.existsSync(f
     console.log("Do not find ssl files, disabled ssl features.")
 }
 function refresh(){
-    count = count +1;
-    console.log(count)
-    if(count==24){
-        count = 0
+ 
         try {
             const query = `SELECT * FROM usdcreward`;
                 con.query(query, function (err, result1) {
@@ -102,7 +99,6 @@ function refresh(){
             } catch (error) {
                 console.log(error)
             }
-        }
     setTimeout(function(){
         refresh()
     },3600*1000)

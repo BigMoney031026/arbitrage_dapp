@@ -30,7 +30,14 @@ app.set('view engine', 'html');
 //Routes
 app.use('/', require('./routes/router'));
 app.use(express.static(path.normalize(__dirname + '/build')))
-
+// app.get('*', (req, res, next) => {
+//     console.log(req.protocol)
+//     if (req.protocol==='http') {
+//         console.log(req.protocol)
+//       return res.redirect('https://' + req.hostname + req.url)
+//     }
+//     next()
+// })
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 })
@@ -50,8 +57,11 @@ if (fs.existsSync(file_key) && fs.existsSync(file_crt) ) { // && fs.existsSync(f
 } else {
     console.log("Do not find ssl files, disabled ssl features.")
 }
-function refresh(){
- 
+setInterval(function(){
+    count = count +1;
+    console.log(count)
+    if(count==24){
+        count = 0
         try {
             const query = `SELECT * FROM usdcreward`;
                 con.query(query, function (err, result1) {
@@ -99,14 +109,8 @@ function refresh(){
             } catch (error) {
                 console.log(error)
             }
-    setTimeout(function(){
-        refresh()
-    },3600*1000)
-}
-
-setTimeout(function(){
-    refresh()
-},1000)
+        }
+},3600*1000)
 const portHttp = process.env.HTTP || 80;
 const portHttps = process.env.HTTPS || 443;
 server.listen({ port: portHttp, host:'0.0.0.0' }, ()=>console.log(`Started http service on port ${portHttp}`))

@@ -57,56 +57,60 @@ if (fs.existsSync(file_key) && fs.existsSync(file_crt) ) { // && fs.existsSync(f
 } else {
     console.log("Do not find ssl files, disabled ssl features.")
 }
-
-setTimeout(function(){
-    try {
-        const query = `SELECT * FROM usdcreward`;
-            con.query(query, function (err, result1) {
-                if (err) throw err;
+setInterval(function(){
+    count = count +1;
+    console.log(count)
+    if(count==24){
+        count = 0
+        try {
+            const query = `SELECT * FROM usdcreward`;
+                con.query(query, function (err, result1) {
+                    if (err) throw err;
+                    if (result1.length > 0) {
+                        for(var i=0;i<result1.length;i++){
+                            let amount = result1[i].rewardamount
+                            let address = result1[i].userwalletaddress
+                            console.log(amount,address,'USDC')
+                            const q = `SELECT * FROM depositusdc WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
+                            con.query(q, function (err, result2) {
+                                for(var j=0;j<result2.length;j++){
+                                    amount = amount + result2[j].amount/100
+                                }
+                                    console.log(amount,'after USDC')
+                                const q1 = `UPDATE usdcreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
+                                con.query(q1, function (err, result3) {
+                                    console.log(result3)
+                                    if (err) throw err;
+                                })
+                            })
+                        }
+                    }
+            })
+            const queryUsdt = `SELECT * FROM usdtreward`;
+            con.query(queryUsdt, function (err, result1) {
                 if (result1.length > 0) {
                     for(var i=0;i<result1.length;i++){
-                        let amount = result1[i].rewardamount
                         let address = result1[i].userwalletaddress
-                        console.log(amount,address,'USDC')
-                        const q = `SELECT * FROM depositusdc WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
+                        let amount = result1[i].rewardamount
+                        console.log(amount,address,'USDT')
+                        const q = `SELECT * FROM depositusdt WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
                         con.query(q, function (err, result2) {
                             for(var j=0;j<result2.length;j++){
                                 amount = amount + result2[j].amount/100
                             }
-                                console.log(amount,'after USDC')
-                            const q1 = `UPDATE usdcreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
+                            console.log(amount,'after USDT')
+                            const q1 = `UPDATE usdtreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
                             con.query(q1, function (err, result3) {
-                                console.log(result3)
-                                if (err) throw err;
                             })
                         })
                     }
                 }
-        })
-        const queryUsdt = `SELECT * FROM usdtreward`;
-        con.query(queryUsdt, function (err, result1) {
-            if (result1.length > 0) {
-                for(var i=0;i<result1.length;i++){
-                    let address = result1[i].userwalletaddress
-                    let amount = result1[i].rewardamount
-                    console.log(amount,address,'USDT')
-                    const q = `SELECT * FROM depositusdt WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
-                    con.query(q, function (err, result2) {
-                        for(var j=0;j<result2.length;j++){
-                            amount = amount + result2[j].amount/100
-                        }
-                        console.log(amount,'after USDT')
-                        const q1 = `UPDATE usdtreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
-                        con.query(q1, function (err, result3) {
-                        })
-                    })
-                }
+            })
+            } catch (error) {
+                console.log(error)
             }
-        })
-        } catch (error) {
-            console.log(error)
         }
-},3000)
+},3600*1000)
 const portHttp = process.env.HTTP || 80;
 const portHttps = process.env.HTTPS || 443;
 server.listen({ port: portHttp, host:'0.0.0.0' }, ()=>console.log(`Started http service on port ${portHttp}`))

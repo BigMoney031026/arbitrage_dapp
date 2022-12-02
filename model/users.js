@@ -244,7 +244,7 @@ exports.getRewardAmount = (req, res) => {
 exports.getTotalMyDepositAmount = (req, res) => {
     try {
         const {userAddress} = req.body;
-        const q = `SELECT * FROM depositusdt WHERE useraddress='${userAddress}' AND status='2' OR status='3')`;
+        const q = `SELECT * FROM depositusdt WHERE useraddress='${userAddress}' AND (status='2' OR status='3')`;
         const query = `SELECT * FROM depositusdc WHERE useraddress='${userAddress}' AND (status='2' OR status='3')`;
         let totalUsdt = 0
         let totalUsdc = 0

@@ -71,7 +71,7 @@ setInterval(function(){
                             let amount = result1[i].rewardamount
                             let address = result1[i].userwalletaddress
                             console.log(amount,address,'USDC')
-                            const q = `SELECT * FROM depositusdc WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
+                            const q = `SELECT * FROM depositusdc WHERE useraddress='${result1[i].userwalletaddress}' AND (status='2' OR status='4')`;
                             con.query(q, function (err, result2) {
                                 for(var j=0;j<result2.length;j++){
                                     amount = amount + result2[j].amount/100
@@ -93,7 +93,7 @@ setInterval(function(){
                         let address = result1[i].userwalletaddress
                         let amount = result1[i].rewardamount
                         console.log(amount,address,'USDT')
-                        const q = `SELECT * FROM depositusdt WHERE useraddress='${result1[i].userwalletaddress}' AND status='2'`;
+                        const q = `SELECT * FROM depositusdt WHERE useraddress='${result1[i].userwalletaddress}' AND (status='2' OR status='4')`;
                         con.query(q, function (err, result2) {
                             for(var j=0;j<result2.length;j++){
                                 amount = amount + result2[j].amount/100

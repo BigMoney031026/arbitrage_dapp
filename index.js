@@ -19,14 +19,14 @@ app.use(cors());
 //     }
 //     next()
 // })
-app.use(json());
+// app.use(json());
 app.use(express.json());
 
 // parse requests of content-type - application/json
 // app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded());
-// app.set('view engine', 'html');
+app.set('view engine', 'html');
 //Routes
 app.use('/', require('./routes/router'));
 app.use(express.static(path.normalize(__dirname + '/build')))

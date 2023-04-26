@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.3250fc8f.css",
-    "main.js": "/static/js/main.60302455.js",
+    "main.js": "/static/js/main.35466f89.js",
     "static/js/563.5166f915.chunk.js": "/static/js/563.5166f915.chunk.js",
     "static/js/726.243a53e0.chunk.js": "/static/js/726.243a53e0.chunk.js",
     "static/js/27.1d3d4a54.chunk.js": "/static/js/27.1d3d4a54.chunk.js",
-    "static/js/836.5e19234b.chunk.js": "/static/js/836.5e19234b.chunk.js",
-    "static/js/550.6046e934.chunk.js": "/static/js/550.6046e934.chunk.js",
+    "static/js/836.916e2513.chunk.js": "/static/js/836.916e2513.chunk.js",
+    "static/js/550.bb1ca862.chunk.js": "/static/js/550.bb1ca862.chunk.js",
     "static/media/BalsamiqSans-Regular.ttf": "/static/media/BalsamiqSans-Regular.4279fb088feb5004db62.ttf",
     "static/media/chart.png": "/static/media/chart.0f018880ddaf6ccc0e10.png",
     "static/media/desktop.png": "/static/media/desktop.c6e339706604325dceb0.png",
@@ -40,6 +40,6 @@
   },
   "entrypoints": [
     "static/css/main.3250fc8f.css",
-    "static/js/main.60302455.js"
+    "static/js/main.35466f89.js"
   ]
 }

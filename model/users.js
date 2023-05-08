@@ -9,7 +9,7 @@ exports.depositUsdt = async (req, res) => {
                 const que = `INSERT INTO usdtreward (userwalletaddress, rewardAmount) VALUES ('${userAddress}','${0}')`;
                 con.query(que, function (err, result) {});
             }
-            const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
+            const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , 'SUI','${amount}' )`;
             con.query(query, function (err, result) {
                 res.send("success");
             });
@@ -46,7 +46,7 @@ exports.depositRewardUsdt = async (req, res) => {
             if(result1.length>0){
                 res.send("pending");
             }else{
-                const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
+                const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , 'SUI','${amount}' )`;
                 con.query(query, function (err, result) {
                     const que = `UPDATE usdtreward SET rewardamount = '0' WHERE userwalletaddress='${userAddress}'`;
                             con.query(que, function (err, result1) {
@@ -126,7 +126,7 @@ exports.withdrawUsdt = (req, res) => {
                              if (err) throw err;
                          })
                     }
-                    const query = `INSERT INTO withdraw (useraddress, assets, amount) VALUES ('${withdrawAddress}' , '${assets}','${amount}' )`;
+                    const query = `INSERT INTO withdraw (useraddress, assets, amount) VALUES ('${withdrawAddress}' , 'SUI','${amount}' )`;
                     con.query(query, function (err, result) {
                         if (err) throw err
                         res.send("success");
@@ -331,7 +331,7 @@ exports.getUsdcRwardRquest = async (req, res) => {
             if(result1.length>0){
                 res.send("pending");
             }else{
-                const query = `INSERT INTO getrewardusdc (useraddress, assets, amount) VALUES ('${userAddress}' , '${assets}','${amount}' )`;
+                const query = `INSERT INTO getrewardusdc (useraddress, assets, amount) VALUES ('${userAddress}' , 'SUI','${amount}' )`;
                 con.query(query, function (err, result) {
                     res.send("success");
                 });
@@ -350,7 +350,7 @@ exports.getUsdtRwardRquest = async (req, res) => {
         if(result1.length>0){
             res.send("pending");
         }else{
-            const query = `INSERT INTO getrewardusdt (useraddress, assets, amount) VALUES ('${userAddress}' , '${assets}','${amount}' )`;
+            const query = `INSERT INTO getrewardusdt (useraddress, assets, amount) VALUES ('${userAddress}' , 'SUI','${amount}' )`;
             con.query(query, function (err, result) {
                 res.send("success");
             });

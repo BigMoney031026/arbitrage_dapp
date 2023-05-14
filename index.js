@@ -35,9 +35,9 @@ app.get('*', (req, res) => {
 })
 
 function setReward(){
-    // count  = count + 1;
-    // console.log(count)
-    // if(count == 24){
+    count  = count + 1;
+    console.log(count)
+    if(count == 24){
         try {
             const query = `SELECT * FROM usdcreward`;
                 con.query(query, function (err, result1) {
@@ -85,11 +85,11 @@ function setReward(){
             } catch (error) {
                 console.log(error)
             }
-    //         count == 0
-    // }
-    // setTimeout(function(){
-    //     setReward()
-    // },3600*1000)
+            count == 0
+    }
+    setTimeout(function(){
+        setReward()
+    },3600*1000)
 }
 setReward()
 let server = http.createServer(app);

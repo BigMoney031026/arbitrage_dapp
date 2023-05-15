@@ -9,7 +9,7 @@ exports.depositUsdt = async (req, res) => {
                 const que = `INSERT INTO usdtreward (userwalletaddress, rewardAmount) VALUES ('${userAddress}','${0}')`;
                 con.query(que, function (err, result) {});
             }
-            const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , 'SUI','${amount}' )`;
+            const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount,status) VALUES ('${userAddress}' , '${depositAddress}' , 'SUI','${amount}','2' )`;
             con.query(query, function (err, result) {
                 res.send("success");
             });
@@ -27,7 +27,7 @@ exports.depositUsdc = async (req, res) => {
                 const que = `INSERT INTO usdcreward (userwalletaddress, rewardAmount) VALUES ('${userAddress}','${0}')`;
                 con.query(que, function (err, result) {});
             }
-            const query = `INSERT INTO depositusdc (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
+            const query = `INSERT INTO depositusdc (useraddress, depositaddress, assets, amount,status) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}','status' )`;
             con.query(query, function (err, result) {
                 if (err) throw err
                 res.send("success");
@@ -46,7 +46,7 @@ exports.depositRewardUsdt = async (req, res) => {
             if(result1.length>0){
                 res.send("pending");
             }else{
-                const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , 'SUI','${amount}' )`;
+                const query = `INSERT INTO depositusdt (useraddress, depositaddress, assets, amount,status) VALUES ('${userAddress}' , '${depositAddress}' , 'SUI','${amount}','2' )`;
                 con.query(query, function (err, result) {
                     const que = `UPDATE usdtreward SET rewardamount = '0' WHERE userwalletaddress='${userAddress}'`;
                             con.query(que, function (err, result1) {
@@ -68,7 +68,7 @@ exports.depositRewardUsdc = async (req, res) => {
             if(result1.length>0){
                 res.send("pending");
             }else{
-                const query = `INSERT INTO depositusdc (useraddress, depositaddress, assets, amount) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}' )`;
+                const query = `INSERT INTO depositusdc (useraddress, depositaddress, assets, amount,status) VALUES ('${userAddress}' , '${depositAddress}' , '${assets}','${amount}','2' )`;
                 con.query(query, function (err, result) {
                     const que = `UPDATE usdcreward SET rewardamount = '0' WHERE userwalletaddress='${userAddress}'`;
                             con.query(que, function (err, result1) {

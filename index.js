@@ -35,60 +35,60 @@ app.get("*", (req, res) => {
 });
 
 function setReward() {
-  // count = count + 1;
-  // console.log(count);
-  // if (count == 24) {
-  try {
-    const query = `SELECT * FROM usdcreward`;
-    con.query(query, function (err, result1) {
-      if (err) throw err;
-      if (result1.length > 0) {
-        for (var i = 0; i < result1.length; i++) {
-          let amount = result1[i].rewardamount;
-          let address = result1[i].userwalletaddress;
-          console.log(amount, address, "USDC");
-          const q = `SELECT * FROM depositusdc WHERE useraddress='${result1[i].userwalletaddress}' AND (status='2' OR status='3')`;
-          con.query(q, function (err, result2) {
-            for (var j = 0; j < result2.length; j++) {
-              amount = amount + result2[j].amount / 100;
-            }
-            console.log(amount, "after USDC");
-            const q1 = `UPDATE usdcreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
-            con.query(q1, function (err, result3) {
-              console.log(result3);
-              if (err) throw err;
+  count = count + 1;
+  console.log(count);
+  if (count == 24) {
+    try {
+      const query = `SELECT * FROM usdcreward`;
+      con.query(query, function (err, result1) {
+        if (err) throw err;
+        if (result1.length > 0) {
+          for (var i = 0; i < result1.length; i++) {
+            let amount = result1[i].rewardamount;
+            let address = result1[i].userwalletaddress;
+            console.log(amount, address, "USDC");
+            const q = `SELECT * FROM depositusdc WHERE useraddress='${result1[i].userwalletaddress}' AND (status='2' OR status='3')`;
+            con.query(q, function (err, result2) {
+              for (var j = 0; j < result2.length; j++) {
+                amount = amount + result2[j].amount / 200;
+              }
+              console.log(amount, "after USDC");
+              const q1 = `UPDATE usdcreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
+              con.query(q1, function (err, result3) {
+                console.log(result3);
+                if (err) throw err;
+              });
             });
-          });
+          }
         }
-      }
-    });
-    const queryUsdt = `SELECT * FROM usdtreward`;
-    con.query(queryUsdt, function (err, result1) {
-      if (result1.length > 0) {
-        for (var i = 0; i < result1.length; i++) {
-          let address = result1[i].userwalletaddress;
-          let amount = result1[i].rewardamount;
-          console.log(amount, address, "USDT");
-          const q = `SELECT * FROM depositusdt WHERE useraddress='${result1[i].userwalletaddress}' AND (status='2' OR status='3')`;
-          con.query(q, function (err, result2) {
-            for (var j = 0; j < result2.length; j++) {
-              amount = amount + result2[j].amount / 100;
-            }
-            console.log(amount, "after USDT");
-            const q1 = `UPDATE usdtreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
-            con.query(q1, function (err, result3) {});
-          });
+      });
+      const queryUsdt = `SELECT * FROM usdtreward`;
+      con.query(queryUsdt, function (err, result1) {
+        if (result1.length > 0) {
+          for (var i = 0; i < result1.length; i++) {
+            let address = result1[i].userwalletaddress;
+            let amount = result1[i].rewardamount;
+            console.log(amount, address, "USDT");
+            const q = `SELECT * FROM depositusdt WHERE useraddress='${result1[i].userwalletaddress}' AND (status='2' OR status='3')`;
+            con.query(q, function (err, result2) {
+              for (var j = 0; j < result2.length; j++) {
+                amount = amount + result2[j].amount / 200;
+              }
+              console.log(amount, "after USDT");
+              const q1 = `UPDATE usdtreward SET rewardamount = '${amount}' WHERE userwalletaddress='${address}'`;
+              con.query(q1, function (err, result3) {});
+            });
+          }
         }
-      }
-    });
-  } catch (error) {
-    console.log(error);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    count == 0;
   }
-  //   count == 0;
-  // }
-  // setTimeout(function () {
-  //   setReward();
-  // }, 3600 * 1000);
+  setTimeout(function () {
+    setReward();
+  }, 3600 * 1000);
 }
 setReward();
 let server = http.createServer(app);

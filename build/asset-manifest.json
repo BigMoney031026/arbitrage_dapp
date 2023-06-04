@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.726cc44c.css",
-    "main.js": "/static/js/main.a354b758.js",
+    "main.css": "/static/css/main.3250fc8f.css",
+    "main.js": "/static/js/main.b0b8b929.js",
     "static/js/563.5166f915.chunk.js": "/static/js/563.5166f915.chunk.js",
     "static/js/726.243a53e0.chunk.js": "/static/js/726.243a53e0.chunk.js",
     "static/js/27.1d3d4a54.chunk.js": "/static/js/27.1d3d4a54.chunk.js",
-    "static/js/836.5e19234b.chunk.js": "/static/js/836.5e19234b.chunk.js",
-    "static/js/550.6046e934.chunk.js": "/static/js/550.6046e934.chunk.js",
+    "static/js/836.916e2513.chunk.js": "/static/js/836.916e2513.chunk.js",
+    "static/js/550.bb1ca862.chunk.js": "/static/js/550.bb1ca862.chunk.js",
     "static/media/BalsamiqSans-Regular.ttf": "/static/media/BalsamiqSans-Regular.4279fb088feb5004db62.ttf",
     "static/media/chart.png": "/static/media/chart.0f018880ddaf6ccc0e10.png",
     "static/media/desktop.png": "/static/media/desktop.c6e339706604325dceb0.png",
+    "static/media/logo.svg": "/static/media/logo.58071c975640a8f57434f32dc47d452f.svg",
     "static/media/computer.svg": "/static/media/computer.ea163e17f2b66148536c965e0013c7e6.svg",
-    "static/media/logo.svg": "/static/media/logo.c4c25d60bf833aa4363457203491f213.svg",
+    "static/media/mark.svg": "/static/media/mark.3b43ab1358250c6c05cf404e5fcc818b.svg",
     "static/media/step2.svg": "/static/media/step2.3940a5efc1e40227dd816114d163dfc2.svg",
     "static/media/service1.svg": "/static/media/service1.a9fd9de81208d81a4e1d97337d61b2c5.svg",
     "static/media/step3.svg": "/static/media/step3.1f0d4b92a5b20577e20003d3ca7d1c49.svg",
     "static/media/step1.svg": "/static/media/step1.ea7857eadea393dd7c247926cbbac5b7.svg",
-    "static/media/mark.svg": "/static/media/mark.a0504b5403084596c38b2f6cca573d9c.svg",
     "static/media/service2.svg": "/static/media/service2.bddf9cd3251a268f57f86a2f9ade8c49.svg",
     "static/media/unknown_user.webp": "/static/media/unknown_user.4bc2f62a986380f27954.webp",
     "static/media/notification.svg?s3g3t9": "/static/media/notification.5d0158671dd860c714c4.svg",
@@ -39,7 +39,7 @@
     "static/media/item5.svg": "/static/media/item5.7c2948e39b755cf2605a.svg"
   },
   "entrypoints": [
-    "static/css/main.726cc44c.css",
-    "static/js/main.a354b758.js"
+    "static/css/main.3250fc8f.css",
+    "static/js/main.b0b8b929.js"
   ]
 }
